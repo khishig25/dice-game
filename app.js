@@ -24,30 +24,57 @@ document.getElementById("score-0").textContent = scores[0];
 document.getElementById("score-1").textContent = scores[1];
 var diceDom = document.querySelector(".dice");
 diceDom.style.display = "none";
-// NEW GAME
 
-function newGame() {
-  document.getElementById("score-0").textContent = 0;
-  document.getElementById("score-1").textContent = 0;
-  document.getElementById("current-0").textContent = 0;
-  document.getElementById("current-1").textContent = 0;
-  scores = [0, 0];
-  console.log("New game", scores);
-}
-function checkWinner(aaa) {
-  if (aaa > 20) {
-    console.log("WIN+++++++++++");
-    alert("win");
-  } else {
-    console.log("hojoogui shuu____________");
-  }
-}
+// New game+++++++++++++++++++++
 document.querySelector(".btn-new").addEventListener("click", newGame);
-checkWinner;
 
 //шоог шидэх
 document.querySelector(".btn-roll").addEventListener("click", buttonRection);
 
+// ------------------------holding tovch darahad
+document.querySelector(".btn-hold").addEventListener("click", function () {
+  console.log("holding", roundScore);
+
+  //аль тогогчид хамаарах
+  /* өөрөөр
+    scores[activePlayer]=scores[activePlayer]+roundScore;
+    (document.getElementById("score-" + activePlayer).textContent=scores[activePlayer];
+*/
+  scores[activePlayer] = scores[activePlayer] + roundScore;
+  document.getElementById("score-" + activePlayer).textContent =
+    scores[activePlayer];
+  if (scores[activePlayer] >= 20) {
+    document.getElementById("name-" + activePlayer).textContent = "WINNER !!!!";
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.add("winner");
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.remove("active");
+  } else {
+    swToNextPlayer();
+  }
+});
+console.log(win);
+///--------------Тоглогчийн ээлж солидог функц-________________----
+function swToNextPlayer() {
+  // ээлжийн оноог 0лэнэ
+  roundScore = 0;
+  document.getElementById("current-" + activePlayer).textContent = roundScore;
+  //тоглогчийн төлөв солих
+
+  // <div class="player-0-panel active"> classlisteees hasah nemeh
+  document
+    .querySelector(".player-" + activePlayer + "-panel")
+    .classList.remove("active");
+  activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
+  document
+    .querySelector(".player-" + activePlayer + "-panel")
+    .classList.add("active");
+
+  diceDom.style.display = "none";
+}
 function buttonRection() {
   var diceNumber = Math.round(Math.random() * 5) + 1;
   diceDom.style.display = "block";
@@ -59,69 +86,18 @@ function buttonRection() {
     roundScore = roundScore + diceNumber;
     document.getElementById("current-" + activePlayer).textContent = roundScore;
   } else {
-    var scrs = scrs + roundScore;
-    roundScore = 0;
-    document.getElementById("current-" + activePlayer).textContent = roundScore;
-
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.remove("active");
-
-    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("active");
-    diceDom.style.display = "none";
+    swToNextPlayer();
   }
 }
+// NEW GAME
 
-// ------------------------holding tovch darahad
-document.querySelector(".btn-hold").addEventListener("click", function () {
-  console.log("holding", roundScore);
-
-  if (activePlayer === 0) {
-    scores[0] = scores[0] + roundScore;
-    roundScore = 0;
-
-    console.log("holding 1", roundScore, activePlayer),
-      (document.getElementById("score-0").textContent = scores[0]);
-    document.getElementById("current-0").textContent = 0;
-
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.remove("active");
-    activePlayer = 1;
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("active");
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("active");
-    diceDom.style.display = "none";
-    checkWinner(scores[0]);
-  } else {
-    scores[1] = scores[1] + roundScore;
-    roundScore = 0;
-
-    console.log("holding 2", roundScore, activePlayer);
-
-    document.getElementById("score-1").textContent = scores[1];
-    document.getElementById("current-1").textContent = 0;
-
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.remove("active");
-    activePlayer = 0;
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("active");
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("active");
-    diceDom.style.display = "none";
-    checkWinner(scores[1]);
-  }
-});
-console.log(win);
+function newGame() {
+  document.getElementById("score-0").textContent = 0;
+  document.getElementById("score-1").textContent = 0;
+  document.getElementById("current-0").textContent = 0;
+  document.getElementById("current-1").textContent = 0;
+  scores = [0, 0];
+  console.log("New game", scores);
+}
 
 //<div class="player-score" id="score-0">43</div>
