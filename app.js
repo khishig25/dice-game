@@ -23,14 +23,13 @@ newGame();
 // ene
 
 function newGame() {
-  activePlayer = 0;
   scores = [0, 0];
   document.getElementById("score-0").textContent = 0;
   document.getElementById("score-1").textContent = 0;
   document.getElementById("current-0").textContent = 0;
   document.getElementById("current-1").textContent = 0;
   scores = [0, 0];
-  activePlayer = 0;
+
   roundScore = 0;
   diceDom.style.display = "none";
   document.querySelector(".player-0-panel").classList.add("active");
@@ -39,6 +38,7 @@ function newGame() {
     .classList.remove("winner");
   document.getElementById("name-0").textContent = "PLAYER 1";
   document.getElementById("name-1").textContent = "PLAYER 2";
+  activePlayer = 0;
 }
 
 //шоог шидэх
