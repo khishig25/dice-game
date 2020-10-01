@@ -5,11 +5,15 @@ tohlohchiin tsugluulsan onoo
 шоо буусан оноог хадгалах нэгээс 6 хүртэл санамсаргүй утгаар цэнэглэнэ.
 нэгдүгээр тоглогч 1 гэх мэт
 */
-var activePlayer = 0;
-var scores = [0, 0];
-var roundScore = 0;
+
 var diceNumber = Math.round(Math.random() * 5) + 1;
 var win = false;
+var roundScore = 0;
+var activePlayer = 0;
+var scores = [];
+var diceDom = document.querySelector(".dice");
+
+newGame();
 
 //document.querySelector("#score-0").textContent = dice;
 //document.querySelector("#score-1").innerHTML = "<em>dice</em>";
@@ -18,15 +22,24 @@ var win = false;
 //document.querySelector("#score-0").textContent = 0;
 // ene
 
-document.getElementById("current-0").textContent = 0;
-document.getElementById("current-1").textContent = 0;
-document.getElementById("score-0").textContent = scores[0];
-document.getElementById("score-1").textContent = scores[1];
-var diceDom = document.querySelector(".dice");
-diceDom.style.display = "none";
-
-// New game+++++++++++++++++++++
-document.querySelector(".btn-new").addEventListener("click", newGame);
+function newGame() {
+  activePlayer = 0;
+  scores = [0, 0];
+  document.getElementById("score-0").textContent = 0;
+  document.getElementById("score-1").textContent = 0;
+  document.getElementById("current-0").textContent = 0;
+  document.getElementById("current-1").textContent = 0;
+  scores = [0, 0];
+  activePlayer = 0;
+  roundScore = 0;
+  diceDom.style.display = "none";
+  document.querySelector(".player-0-panel").classList.add("active");
+  document
+    .querySelector(".player-" + activePlayer + "-panel")
+    .classList.remove("winner");
+  document.getElementById("name-0").textContent = "PLAYER 1";
+  document.getElementById("name-1").textContent = "PLAYER 2";
+}
 
 //шоог шидэх
 document.querySelector(".btn-roll").addEventListener("click", buttonRection);
@@ -90,14 +103,5 @@ function buttonRection() {
   }
 }
 // NEW GAME
-
-function newGame() {
-  document.getElementById("score-0").textContent = 0;
-  document.getElementById("score-1").textContent = 0;
-  document.getElementById("current-0").textContent = 0;
-  document.getElementById("current-1").textContent = 0;
-  scores = [0, 0];
-  console.log("New game", scores);
-}
-
-//<div class="player-score" id="score-0">43</div>
+// New game+++++++++++++++++++++
+document.querySelector(".btn-new").addEventListener("click", newGame);
