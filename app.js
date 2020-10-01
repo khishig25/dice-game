@@ -59,7 +59,7 @@ document.querySelector(".btn-hold").addEventListener("click", function () {
     scores[activePlayer] = scores[activePlayer] + roundScore;
     document.getElementById("score-" + activePlayer).textContent =
       scores[activePlayer];
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= 100) {
       //тоглогчийн төлөв солих
       isGameOver = true;
       document.getElementById("name-" + activePlayer).textContent =
