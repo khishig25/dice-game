@@ -12,6 +12,7 @@ var roundScore = 0;
 var activePlayer = 0;
 var scores = [];
 var diceDom = document.querySelector(".dice");
+var isGameOver;
 
 newGame();
 
@@ -23,6 +24,7 @@ newGame();
 // ene
 
 function newGame() {
+  isGameOver = false;
   scores = [0, 0];
   document.getElementById("score-0").textContent = 0;
   document.getElementById("score-1").textContent = 0;
@@ -46,26 +48,31 @@ document.querySelector(".btn-roll").addEventListener("click", buttonRection);
 
 // ------------------------holding tovch darahad
 document.querySelector(".btn-hold").addEventListener("click", function () {
-  console.log("holding", roundScore);
+  if (isGameOver === false) {
+    //console.log("holding", roundScore);
 
-  //аль тогогчид хамаарах
-  /* өөрөөр
+    //аль тогогчид хамаарах
+    /* өөрөөр
     scores[activePlayer]=scores[activePlayer]+roundScore;
     (document.getElementById("score-" + activePlayer).textContent=scores[activePlayer];
 */
-  scores[activePlayer] = scores[activePlayer] + roundScore;
-  document.getElementById("score-" + activePlayer).textContent =
-    scores[activePlayer];
-  if (scores[activePlayer] >= 20) {
-    document.getElementById("name-" + activePlayer).textContent = "WINNER !!!!";
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("winner");
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.remove("active");
-  } else {
-    swToNextPlayer();
+    scores[activePlayer] = scores[activePlayer] + roundScore;
+    document.getElementById("score-" + activePlayer).textContent =
+      scores[activePlayer];
+    if (scores[activePlayer] >= 20) {
+      //тоглогчийн төлөв солих
+      isGameOver = true;
+      document.getElementById("name-" + activePlayer).textContent =
+        "WINNER !!!!";
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.add("winner");
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.remove("active");
+    } else {
+      swToNextPlayer();
+    }
   }
 });
 console.log(win);
@@ -74,7 +81,6 @@ function swToNextPlayer() {
   // ээлжийн оноог 0лэнэ
   roundScore = 0;
   document.getElementById("current-" + activePlayer).textContent = roundScore;
-  //тоглогчийн төлөв солих
 
   // <div class="player-0-panel active"> classlisteees hasah nemeh
   document
@@ -89,17 +95,21 @@ function swToNextPlayer() {
   diceDom.style.display = "none";
 }
 function buttonRection() {
-  var diceNumber = Math.round(Math.random() * 5) + 1;
-  diceDom.style.display = "block";
-  console.log(diceNumber);
-  //shoonii zurag solih
-  diceDom.src = "dice-" + diceNumber + ".png";
-  // buusan too negees yalgaatai bol idevhtei toglogchid nemne
-  if (diceNumber !== 1) {
-    roundScore = roundScore + diceNumber;
-    document.getElementById("current-" + activePlayer).textContent = roundScore;
-  } else {
-    swToNextPlayer();
+  if (isGameOver == false) {
+    var diceNumber = Math.round(Math.random() * 5) + 1;
+    diceDom.style.display = "block";
+    console.log(diceNumber);
+    //shoonii zurag solih
+    diceDom.src = "dice-" + diceNumber + ".png";
+    // buusan too negees yalgaatai bol idevhtei toglogchid nemne
+    if (diceNumber !== 1) {
+      roundScore = roundScore + diceNumber;
+      document.getElementById(
+        "current-" + activePlayer
+      ).textContent = roundScore;
+    } else {
+      swToNextPlayer();
+    }
   }
 }
 // NEW GAME
